@@ -1,29 +1,33 @@
 <% layout("./layouts/boilerplate") -%>
+
+<% if (listings.length > 0) { %>
+  <h4>Listings currently available at <i><%= listings[0].location %></i></h4>
+<% } else { %>
+  <h1>No listings found</h1>
+<% } %>
+
 <div class="row">
-        <% for(let listing of listings) {%>
-            <div class="col-lg-4 col-md-4 col-sm-12">
-                <a href="/listings/<%=listing._id%>" class="listing-link">
-                    <div class="card w-100 h-100 listing-card">
-                        <img src="<%=listing.image.url%>" class="card-img-top" alt="listing-image" />
-                        <div class="card-img-overlay"><h5><%=listing.title%></h5></div>
-                        <div class="card-body">
-                            <p class="card-text">
-                            <b><%=listing.title%></b><br>
-                            <% if (typeof listing.price === "number") { %>
-                                &#8377;<%= listing.price.toLocaleString("en-IN") %> /night
-                                <i class="tax-info">&nbsp;&nbsp; +18% GST</i>
-                            <% } else { %>
-                            Price not available
-                            <% } %>
-                            </p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        <% } %>
-       
+  <% for (let listing of listings) { %>
+    <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+      <a href="/listings/<%= listing._id %>" class="listing-link">
+        <div class="card w-100 h-100 listing-card">
+          <img src="<%= listing.image.url %>" class="card-img-top" alt="listing-image" />
+          <div class="card-img-overlay">
+            <h5><%= listing.title %></h5>
+          </div>
+          <div class="card-body">
+            <p class="card-text">
+              <b><%= listing.title %></b><br>
+              <% if (typeof listing.price === "number") { %>
+                &#8377;<%= listing.price.toLocaleString("en-IN") %> /night
+                <i class="tax-info">&nbsp;&nbsp; +18% GST</i>
+              <% } else { %>
+                Price not available
+              <% } %>
+            </p>
+          </div>
+        </div>
+      </a>
     </div>
-    </div>
-    </main>
-    
-</body>
+  <% } %>
+</div>

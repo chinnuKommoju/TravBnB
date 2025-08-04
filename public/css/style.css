@@ -37,6 +37,7 @@ body {
     gap:1rem;
     background: #ebebeb;
     padding:1rem;
+    margin-top:1rem;
 
 }
 .f-info-socials i{
@@ -53,7 +54,7 @@ body {
 .listing-card{
     width: 100% !important;
     position: relative;
-    margin-bottom:1rem;
+    margin-bottom:0.5rem;
     margin-top:0.5rem;
     border:none;
     min-height:20rem;

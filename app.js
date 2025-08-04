@@ -16,6 +16,10 @@ const listingsRouter = require("./routes/listing.js");
 const reviewsRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 
+//favicon
+const favicon = require('serve-favicon');
+app.use(favicon(path.join(__dirname, 'public', 'favicon.png')));
+
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }

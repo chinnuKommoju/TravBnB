@@ -1,0 +1,25 @@
+<% layout("layouts/boilerplate") -%>
+
+<body>
+    <div class="row">
+    <form method="post" action="/signup" novalidate class="needs-validation">
+        <div class="col-8 offset-2">
+        <h3 class="mt-3">signUp for TravBnB</h3> 
+        <div class="mb-3">
+            <label for="username" class="form-label">username:</label>
+            <input type="text" name="username" class="form-control" required>
+            <div class="invalid-feedback">Enter Valid username!</div>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">e-mail:</label>
+            <input type="email" name="email" class="form-control" required>
+            <div class="invalid-feedback">Enter Valid e-mail!</div>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">password:</label>
+            <input type="password" name="password" class="form-control" required>
+            <div class="invalid-feedback">Enter Valid password!</div>
+        </div>
+        <button type="submit" class="btn btn-success mb-3">Register</button>
+    </div>
+    </form>

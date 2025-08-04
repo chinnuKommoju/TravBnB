@@ -1,0 +1,43 @@
+<% layout("layouts/boilerplate") -%>
+
+<body>
+    <div class="row">
+    <form method="post" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
+        <div class="col-8 offset-2">
+        <h3 class="mt-3">Create New Listing</h3> 
+        <div class="mb-3">
+            <label for="title" class="form-label">Title:</label>
+            <input type="text" name="listing[title]" class="form-control" placeholder="Enter title of your listing" required>
+            <div class="invalid-feedback">Enter Valid Title!</div>
+        </div>
+        <div class="mb-3">
+             <label for="description" class="form-label" >Description:</label>
+            <textarea name="listing[description]" class="form-control" placeholder="Enter description of your listing" required ></textarea>
+            <div class="invalid-feedback">Enter a Short Description!</div>
+        </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Image URL:</label>
+            <input type="file" name="listing[image]" class="form-control" placeholder="Enter image URL" required>
+        </div>
+        <div class="mb-3">
+            <label for="location" class="form-label">Location:</label>
+            <input type="text" name="listing[location]" class="form-control" placeholder="Visakhapatnam" required>
+        <div class="invalid-feedback">Enter Valid Location!</div>
+        </div>
+        <div class="row">
+        <div class="mb-3 col-md-4">
+            <label for="price" class="form-label">Price:</label>
+            <input type="text" name="listing[price]" class="form-control" placeholder="25000" required>
+        <div class="invalid-feedback">Enter Valid Price!</div>
+        </div>
+        <div class="mb-3 col-md-8">
+            <label for="country" class="form-label">Country:</label>
+            <input type="text" name="listing[country]" class="form-control" placeholder="India" required>
+        <div class="invalid-feedback">Enter Valid Country!</div>
+        </div>
+        </div>
+        <button class="btn btn-danger mb-3">Add Listing</button>
+        </div>
+    </form>
+</div>
+</body>

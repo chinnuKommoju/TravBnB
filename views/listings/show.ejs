@@ -1,0 +1,103 @@
+<% layout("layouts/boilerplate") -%>
+
+<body>
+  <div class="row">
+    <div class="col-8 offset-2">
+      <h3 class="mt-3"><%= listing.title %></h3>
+      <div class="card listing-card">
+        <img src="<%= listing.image.url %>" class="card-img-top" alt="listing-image">
+        <div class="card-body">
+          <p class="card-text mt-3"><i><%= listing.description %></i></p>
+          <p class="card-text">
+            <% if (typeof listing.price === "number") { %>
+              ₹<%= listing.price.toLocaleString("en-IN") %> /night
+            <% } else { %>
+              Price not available
+            <% } %>
+          </p>
+          <p class="card-text"><%= listing.location %></p>
+          <p class="card-text"><%= listing.country %></p>
+          <p class="card-text">Posted by: <%= listing.owner.username %></p>
+        </div>
+      </div>
+
+      <% if (currUser && listing.owner._id.equals(currUser.id)) { %>
+        <div class="d-flex gap-3 mb-5">
+          <a href="/listings/<%= listing._id %>/edit" class="btn btn-danger">Edit Listing</a>
+          <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
+            <button class="btn btn-dark">Delete Listing</button>
+          </form>
+        </div>
+      <% } %>
+
+      <% if (currUser) { %>
+        <div class="col-8 offset-2">
+          <h4>Leave a Review</h4>
+          <form action="/listings/<%= listing._id %>/reviews" method="POST" novalidate class="mt-3 mb-3 needs-validation">
+            <label for="review" class="form-label">Review:</label>
+            <fieldset class="starability-slot" id="review" name="review[rating]">
+              <legend>Leave Rating:</legend>
+              <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating.">
+              <input type="radio" id="rate1" name="review[rating]" value="1"><label for="rate1">1 star.</label>
+              <input type="radio" id="rate2" name="review[rating]" value="2"><label for="rate2">2 stars.</label>
+              <input type="radio" id="rate3" name="review[rating]" value="3"><label for="rate3">3 stars.</label>
+              <input type="radio" id="rate4" name="review[rating]" value="4"><label for="rate4">4 stars.</label>
+              <input type="radio" id="rate5" name="review[rating]" value="5"><label for="rate5">5 stars.</label>
+              <span class="starability-focus-ring"></span>
+            </fieldset>
+
+            <div>
+              <label for="comment" class="form-label">Comment:</label>
+              <textarea name="review[comment]" id="comment" rows="3" cols="50" class="form-control" required></textarea>
+              <div class="invalid-feedback">Enter a short description!</div>
+            </div>
+
+            <button type="submit" class="btn btn-outline-dark mb-3 mt-3">Submit</button>
+          </form>
+        </div>
+      <% } %>
+
+        <!-- reviews section -->
+      <% if(listing.reviews.length) { %>
+        <hr>
+        <h6>All Reviews:</h6>
+        <div class="row row-cols-1 row-cols-md-2 g-3">
+            <% for (review of listing.reviews) { %>
+                <div class="col">
+                    <div class="card mb-3 p-3">
+                    <h5 class="card-title"><%= review.author.username %></h5>
+                    <p class="card-text"><%= review.comment %></p>
+                    <p class="starability-result" data-rating="<%= review.rating %>"></p>
+
+                    <% if (currUser && review.author._id.equals(currUser.id)) { %>
+                         <form method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+                        <button type="submit" class="btn btn-sm btn-dark">Delete</button>
+                        </form>
+                    <% } %>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+        <% } %>
+
+        <!-- map section -->
+        <hr>
+       <div class="map mb-3">
+        <% if (listing.geometry && listing.geometry.coordinates) { %>
+          <div id="map" style="height: 400px; width: 100%;" class="mb-5"></div>
+          <script>
+            const lat = <%= listing.geometry.coordinates[1] %>;
+            const lng = <%= listing.geometry.coordinates[0] %>;
+          </script>
+          <script src="/js/map.js"></script>
+          <script async
+            src="https://maps.googleapis.com/maps/api/js?key=<%=process.env.GOOGLE_MAPS_API_KEY %>&callback=initMap">
+          </script>
+        <% } else { %>
+          <p class="text-muted mt-4">No location data available for this listing.</p>
+        <% } %>
+      </div>
+    </div>
+
+  </div>
+</body>
